@@ -7,9 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mcp:server": "tsx src/mcp/supabase-server.ts",
+    "test:request-access": "node --import tsx/esm scripts/test-request-access.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.4",
     "@supabase/supabase-js": "^2.56.0",
     "@tailwindcss/vite": "^4.1.12",
     "@types/react-router-dom": "^5.3.3",
@@ -23,10 +26,12 @@
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",
+    "dotenv": "^17.2.1",
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "tsx": "^4.20.5",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
     "vite": "^7.1.2"

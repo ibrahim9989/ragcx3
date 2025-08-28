@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import BackgroundGradient from "../components/BackgroundGradient";
+import {
+  submitRequestAccess,
+  type RequestAccessData,
+} from "../services/requestAccess";
 
 const RequestAccess: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RequestAccessData>({
     name: "",
     email: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submissionId, setSubmissionId] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -16,17 +22,30 @@ const RequestAccess: React.FC = () => {
       ...prev,
       [name]: value,
     }));
+    // Clear error when user starts typing
+    if (error) setError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const result = await submitRequestAccess(formData);
 
-    setIsLoading(false);
-    setIsSubmitted(true);
+      if (result.success && result.data) {
+        setSubmissionId(result.data.id);
+        setIsSubmitted(true);
+      } else {
+        setError(result.error || "Failed to submit request. Please try again.");
+      }
+    } catch (err) {
+      console.error("Form submission error:", err);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubmitted) {
@@ -83,7 +102,7 @@ const RequestAccess: React.FC = () => {
               <p className="text-lg text-gray-400 mb-8 leading-relaxed">
                 Your request has been submitted successfully. You will be
                 notified when access becomes available.
-              </p>              
+              </p>
             </div>
           </div>
         </div>
@@ -145,6 +164,13 @@ const RequestAccess: React.FC = () => {
 
           {/* Form Card */}
           <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8 shadow-xl">
+            {/* Error Message */}
+            {error && (
+              <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
+                <p className="text-red-300 text-sm">{error}</p>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name Field */}
               <div>
@@ -152,7 +178,7 @@ const RequestAccess: React.FC = () => {
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-300 mb-2"
                 >
-                  Full Name
+                  Full Name *
                 </label>
                 <input
                   type="text"
@@ -172,7 +198,7 @@ const RequestAccess: React.FC = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-300 mb-2"
                 >
-                  Email Address
+                  Email Address *
                 </label>
                 <input
                   type="email"

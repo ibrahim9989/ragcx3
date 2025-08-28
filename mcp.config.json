@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "node",
+      "args": ["--loader", "tsx/esm", "src/mcp/supabase-server.ts"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  },
+  "client": {
+    "name": "ragcx2-supabase-client",
+    "version": "1.0.0",
+    "description": "MCP client for RAG.CX Supabase integration"
+  },
+  "server": {
+    "name": "ragcx2-supabase-server",
+    "version": "1.0.0",
+    "description": "MCP server exposing Supabase database operations",
+    "capabilities": {
+      "tools": {
+        "supabase_query": "Execute SELECT queries on Supabase tables",
+        "supabase_insert": "Insert data into Supabase tables",
+        "supabase_update": "Update data in Supabase tables",
+        "supabase_delete": "Delete data from Supabase tables",
+        "supabase_get_schema": "Get table schema information"
+      }
+    }
+  }
+}
