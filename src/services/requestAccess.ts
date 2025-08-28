@@ -16,7 +16,53 @@ export interface RequestAccessResponse {
 }
 
 /**
- * Submit a request access form to Supabase
+ * Submit form data to Web3Forms
+ */
+async function submitToWeb3Forms(
+  formData: RequestAccessData
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const web3FormsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+    if (!web3FormsKey) {
+      console.warn("Web3Forms access key not configured");
+      return { success: false, error: "Web3Forms not configured" };
+    }
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        access_key: web3FormsKey,
+        name: formData.name,
+        email: formData.email,
+        subject: "New Access Request - RAG.CX",
+        from_name: "RAG.CX Access Request",
+        message: `New access request from ${formData.name} (${formData.email})`,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      return { success: true };
+    } else {
+      return {
+        success: false,
+        error: result.message || "Web3Forms submission failed",
+      };
+    }
+  } catch (error) {
+    console.error("Web3Forms submission error:", error);
+    return { success: false, error: "Failed to send notification email" };
+  }
+}
+
+/**
+ * Submit a request access form to Supabase and Web3Forms
  */
 export async function submitRequestAccess(
   formData: RequestAccessData
@@ -62,7 +108,7 @@ export async function submitRequestAccess(
       };
     }
 
-    // Submit the request
+    // Submit to Supabase database
     const { data, error } = await supabase
       .from("request_access")
       .insert({
@@ -79,6 +125,12 @@ export async function submitRequestAccess(
         error: "Failed to submit your request. Please try again.",
       };
     }
+
+    // Submit to Web3Forms for email notification (non-blocking)
+    submitToWeb3Forms(formData).catch((error) => {
+      console.warn("Web3Forms notification failed:", error);
+      // Don't fail the main submission if email notification fails
+    });
 
     return {
       success: true,
