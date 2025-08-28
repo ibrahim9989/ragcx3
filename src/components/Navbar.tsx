@@ -58,12 +58,6 @@ const Navbar: React.FC = () => {
             >
               Pricing
             </a>
-            <a
-              href="#careers"
-              className="text-gray-300 hover:text-white transition-colors duration-200"
-            >
-              Careers
-            </a>
 
             {/* Request Access Button */}
             <Link
@@ -172,13 +166,6 @@ const Navbar: React.FC = () => {
               onClick={toggleMobileMenu}
             >
               Pricing
-            </a>
-            <a
-              href="#careers"
-              className="text-gray-300 hover:text-white transition-colors duration-200 py-2 px-4 rounded-lg hover:bg-gray-800"
-              onClick={toggleMobileMenu}
-            >
-              Careers
             </a>
 
             {/* Mobile Request Access Button */}

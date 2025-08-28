@@ -625,22 +625,6 @@ const Footer: React.FC = () => {
                   Pricing
                 </a>
               </li>
-              <li>
-                <a
-                  href="#docs"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#api"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  API
-                </a>
-              </li>
             </ul>
           </div>
 
