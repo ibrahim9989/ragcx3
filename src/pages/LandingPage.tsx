@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import BackgroundGradient from "../components/BackgroundGradient";
 import RAGWidgets from "../components/RAGWidgets";
+import { trackEvent } from "../lib/analytics";
 
 // Hero Text Component
 const HeroText: React.FC = () => {
@@ -10,8 +11,8 @@ const HeroText: React.FC = () => {
     <>
       {/* Main Title */}
       <h1
-        className="text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white mb-8"
-        style={{ lineHeight: "1.0" }}
+        className="text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white mb-6"
+        style={{ lineHeight: "0.9" }}
       >
         Build Intelligent
         <br />
@@ -32,8 +33,8 @@ const HeroText: React.FC = () => {
 
       {/* Description */}
       <p
-        className="text-lg lg:text-xl text-gray-400 font-normal mb-12"
-        style={{ lineHeight: "1.6" }}
+        className="text-lg lg:text-xl text-gray-400 font-normal mb-8"
+        style={{ lineHeight: "1.4" }}
       >
         RAG.CX is a fast,{" "}
         <span className="font-semibold text-white">
@@ -47,23 +48,34 @@ const HeroText: React.FC = () => {
 };
 // Hero Button Component
 const HeroButton: React.FC = () => {
+  const handleClick = () => {
+    // Track button click in Google Analytics
+    trackEvent('click', 'hero_button', 'request_access');
+  };
+  
   return (
     <Link
       to="/request-access"
-      className="inline-block px-4 py-4 text-lg font-semibold text-white rounded-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 active:translate-y-0"
+      className="inline-block px-6 py-4 text-xl font-bold text-white rounded-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 active:translate-y-0 relative overflow-hidden"
       style={{
         background: "linear-gradient(to right, #6366f1, #8b5cf6, #a855f7)",
-        boxShadow: "0 10px 25px rgba(99, 102, 241, 0.3)",
+        boxShadow: "0 10px 25px rgba(99, 102, 241, 0.4)",
+        fontSize: "1.125rem",
+        letterSpacing: "0.025em",
+        animation: "pulse 2s infinite",
       }}
+      onClick={handleClick}
       onMouseEnter={(e) => {
         e.currentTarget.style.background =
           "linear-gradient(to right, #5b21b6, #7c3aed, #9333ea)";
-        e.currentTarget.style.boxShadow = "0 15px 35px rgba(99, 102, 241, 0.4)";
+        e.currentTarget.style.boxShadow = "0 15px 35px rgba(99, 102, 241, 0.5)";
+        e.currentTarget.style.transform = "translateY(-2px)";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.background =
           "linear-gradient(to right, #6366f1, #8b5cf6, #a855f7)";
-        e.currentTarget.style.boxShadow = "0 10px 25px rgba(99, 102, 241, 0.3)";
+        e.currentTarget.style.boxShadow = "0 10px 25px rgba(99, 102, 241, 0.4)";
+        e.currentTarget.style.transform = "translateY(0)";
       }}
       onMouseDown={(e) => {
         e.currentTarget.style.boxShadow = "0 8px 20px rgba(99, 102, 241, 0.3)";
@@ -72,16 +84,18 @@ const HeroButton: React.FC = () => {
         e.currentTarget.style.boxShadow = "0 15px 35px rgba(99, 102, 241, 0.4)";
       }}
     >
-      Get Started
+      Request Access
     </Link>
   );
 };
 // Hero Content Component (renamed from HeroSection to avoid conflict)
 const HeroContent: React.FC = () => {
   return (
-    <div className="flex-1 justify-start px-0 mb-30" id="home">
+    <div className="flex-1 justify-start px-0 mb-30 lg:max-w-[45%] flex flex-col" id="home">
       <HeroText />
-      <HeroButton />
+      <div className="mt-0">
+        <HeroButton />
+      </div>
     </div>
   );
 };
@@ -96,7 +110,7 @@ const HeroSection: React.FC = () => {
           style={{ marginLeft: "25px", marginRight: "25px" }}
         >
           <div className="max-w-7xl mx-auto px-4 w-full">
-            <div className="flex flex-col lg:flex-row items-center relative">
+            <div className="flex flex-col lg:flex-row items-center justify-between relative pt-10">
               {/* Hero Content - Left Side */}
               <HeroContent />
 
@@ -696,6 +710,11 @@ const Footer: React.FC = () => {
 };
 
 const LandingPage: React.FC = () => {
+  // Track page view when component mounts
+  useEffect(() => {
+    trackEvent('page_view', 'landing_page', 'home');
+  }, []);
+  
   return (
     <div className="relative">
       {/* Hero Section with Background Gradient */}

@@ -2,14 +2,13 @@ import React from "react";
 
 const RAGWidgets: React.FC = () => {
   return (
-    <div className="h-[600px] absolute hidden lg:block left-[52%] xl:left-[48%] w-[45vw] max-w-[650px] mx-auto">
+    <div className="h-[600px] absolute hidden lg:block left-[58%] xl:left-[53%] w-[42vw] max-w-[650px] mx-auto">
       <div className="overflow-hidden h-full">
         {/* RAG.CX Widgets Container */}
         <div
-          className="relative rounded-2xl p-8 max-w-[800px] mx-auto mt-9"
+          className="relative rounded-2xl p-8 max-w-[800px] mx-auto mt-9 backdrop-blur-xl"
           style={{
-            backdropFilter: "blur(20px) saturate(180%)",
-            background: "rgba(17, 25, 40, 0.25)",
+            background: "rgba(17, 25, 40, 0.4)",
             border: "1px solid rgba(255, 255, 255, 0.125)",
             boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
           }}
@@ -109,7 +108,7 @@ const RAGWidgets: React.FC = () => {
                 </div>
                 <div className="space-y-1 flex flex-col items-start">
                   <div className="text-purple-400 text-xs">
-                    � Documents: 1,247
+                    📄 Documents: 1,247
                   </div>
                   <div className="text-cyan-400 text-xs">🏷️ Categories: 23</div>
                   <div className="text-pink-400 text-xs">

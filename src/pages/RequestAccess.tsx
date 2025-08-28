@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BackgroundGradient from "../components/BackgroundGradient";
 import {
   submitRequestAccess,
   type RequestAccessData,
 } from "../services/requestAccess";
+import { trackFormSubmission, trackEvent } from "../lib/analytics";
 
 const RequestAccess: React.FC = () => {
   const [formData, setFormData] = useState<RequestAccessData>({
@@ -14,6 +15,11 @@ const RequestAccess: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Track page view when component mounts
+  useEffect(() => {
+    trackEvent('page_view', 'form', 'request_access');
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,8 +40,15 @@ const RequestAccess: React.FC = () => {
       const result = await submitRequestAccess(formData);
 
       if (result.success && result.data) {
+        // Track successful form submission in Google Analytics
+        trackFormSubmission('access-request-form', 'Access Request');
+        trackEvent('submit_form', 'access_request', 'success');
+        
         setIsSubmitted(true);
       } else {
+        // Track failed form submission in Google Analytics
+        trackEvent('submit_form', 'access_request', 'error', 0);
+        
         setError(result.error || "Failed to submit request. Please try again.");
       }
     } catch (err) {

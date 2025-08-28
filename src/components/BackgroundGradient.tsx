@@ -11,7 +11,7 @@ const BackgroundGradient: React.FC<BackgroundGradientProps> = ({
   ...props
 }) => {
   // Define the gradient colors - dark purple to black gradient
-  const fallbackBackground = `linear-gradient(180deg, #301B57 0%, #1A0B3D 10%, #000000 100%)`;
+  const fallbackBackground = `linear-gradient(180deg, #301B57 0%, #1F0F45 10%, #14092F 40%, #000000 100%)`;
 
   const gradientStyle = {
     backgroundImage: fallbackBackground,
