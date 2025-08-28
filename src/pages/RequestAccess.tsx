@@ -14,7 +14,6 @@ const RequestAccess: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [submissionId, setSubmissionId] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -35,7 +34,6 @@ const RequestAccess: React.FC = () => {
       const result = await submitRequestAccess(formData);
 
       if (result.success && result.data) {
-        setSubmissionId(result.data.id);
         setIsSubmitted(true);
       } else {
         setError(result.error || "Failed to submit request. Please try again.");
