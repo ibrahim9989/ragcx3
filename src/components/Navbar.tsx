@@ -31,21 +31,16 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 w-full">
         <div className="flex items-center justify-between py-6">
           {/* Logo */}
-          <div
-            className="text-3xl font-bold"
-            style={{
-              background:
-                "linear-gradient(to right, #6366f1, #8b5cf6, #a855f7)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            RAG.CX
+          <div className="flex items-center">
+            <img
+              src="/raglogo.jpg"
+              alt="RAG.CX Logo"
+              className="h-20 w-auto brightness-0 invert"
+            />
           </div>
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-start space-x-8 -mt-2">
             <a
               href="#features"
               className="text-gray-300 hover:text-white transition-colors duration-200"
@@ -62,7 +57,7 @@ const Navbar: React.FC = () => {
             {/* Request Access Button */}
             <Link
               to="/request-access"
-              className="text-white px-3 py-2 rounded-xl font-semibold transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 active:translate-y-0 inline-block"
+              className="text-white px-3 py-2 rounded-xl font-semibold transition-all duration-300 ease-in-out inline-block -mt-1"
               style={{
                 background:
                   "linear-gradient(to right, #6366f1, #8b5cf6, #a855f7)",

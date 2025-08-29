@@ -629,7 +629,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Company Links */}
-          <div>
+          {/* <div>
             <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
               <li>
@@ -665,7 +665,7 @@ const Footer: React.FC = () => {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom Bar */}
