@@ -189,7 +189,7 @@ const RequestAccess: React.FC = () => {
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-300 mb-2"
                 >
-                  Full Name *
+                  Full Name 
                 </label>
                 <input
                   type="text"
@@ -209,7 +209,7 @@ const RequestAccess: React.FC = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-300 mb-2"
                 >
-                  Email Address *
+                  Email Address 
                 </label>
                 <input
                   type="email"
