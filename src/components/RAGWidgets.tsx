@@ -2,7 +2,7 @@ import React from "react";
 
 const RAGWidgets: React.FC = () => {
   return (
-    <div className="h-[600px] absolute hidden lg:block left-[58%] xl:left-[53%] w-[42vw] max-w-[650px] mx-auto">
+    <div className="h-[600px] absolute hidden lg:block left-[55%] xl:left-[53%] w-[42vw] max-w-[650px] mx-auto">
       <div className="overflow-hidden h-full">
         {/* RAG.CX Widgets Container */}
         <div
